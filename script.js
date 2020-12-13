@@ -54,7 +54,7 @@ const loadSong=(song)=>{
     title.textContent=song.title;
     artist.textContent=song.artist;
     music.src="Music/"+song.name+".mp3";
-    img.src="images/"+song.image+".jpg";
+    img.src="Images/"+song.image+".jpg";
 };
 songIndex=0;
 
