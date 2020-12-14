@@ -106,8 +106,9 @@ music.addEventListener("timeupdate",(event)=>{
 
 // progress on click
 progressDiv.addEventListener("click",(event)=>{
+
     const {duration}=music;
-    let moveProgress =(event.offsetX/event.srcElement.clientWidth)*duration;
+    let moveProgress =(event.offsetX/290)*duration;
     music.currentTime=moveProgress;
 });
 
