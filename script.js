@@ -6,18 +6,29 @@ const artist=document.getElementById("artist");
 const prev=document.getElementById("prev");
 const next=document.getElementById("next");
 
+let progress=document.getElementById("progress");
+let totalDuration=document.getElementById("duration");
+let currentDuration=document.getElementById("currentTime");
+const progressDiv=document.getElementById("progressDiv");
+
 const songs =[
 {
-    name:"01 Chogada - Loveratri(DJMazacom.Com)",
-    title:"Chogada",
-    artist:"Darshan Raval",
-    image:"Chogada",
+    name:"Malang (Title Track) - Songs.pk - 128Kbps",
+    title:"Malang",
+    artist:"Mithoon",
+    image:"Malang",
 },
 {
     name:"02 Akh Lad Jave - Loveratri(DJMazacom.Com)",
     title:"Akh Lad Jave",
     artist:"Badshah",
     image:"AakLadJave",
+},
+{
+    name:"01 Chogada - Loveratri(DJMazacom.Com)",
+    title:"Chogada",
+    artist:"Darshan Raval",
+    image:"Chogada",
 },
 {
     name:"01 High Rated Gabru - Nawabzaade(DJMazacom.Com)",
@@ -69,6 +80,39 @@ const prevsong=()=>{
     loadSong(songs[songIndex]);
     playMusic();
 }
+
+// progress JS work
+
+music.addEventListener("timeupdate",(event)=>{
+    // console.log(event);
+    const { currentTime, duration}= event.srcElement;
+
+    let progressTime=(currentTime/duration)*100;
+    progress.style.width=`${progressTime}%`;
+
+    let secDuration=Math.floor(duration%60);
+    if(secDuration<10)
+        secDuration='0'+secDuration;
+    // to avoid NaN in between switching we use if(duartion)
+    if(duration)
+    totalDuration.textContent=Math.floor(duration/60)+':'+secDuration;
+
+    let secCurrentTime=Math.floor(currentTime%60);
+    if(secCurrentTime<10)
+        secCurrentTime='0'+secCurrentTime;
+    currentDuration.textContent=Math.floor(currentTime/60)+':'+secCurrentTime;
+
+});
+
+// progress on click
+progressDiv.addEventListener("click",(event)=>{
+    const {duration}=music;
+    let moveProgress =(event.offsetX/event.srcElement.clientWidth)*duration;
+    music.currentTime=moveProgress;
+});
+
+// if music end call next song 
+music.addEventListener("ended",nextsong);
 
 next.addEventListener('click',nextsong);
 prev.addEventListener('click',prevsong);
